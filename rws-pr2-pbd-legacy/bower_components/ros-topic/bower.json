@@ -1,11 +1,10 @@
 {
-  "name": "rws-pr2-pbd-legacy",
-  "main": "index.html",
+  "name": "ros-topic",
+  "description": "A Polymer element for ROS topics in roslibjs.",
+  "main": "ros-topic.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "ros-rviz": "jstnhuang/ros-rviz#^0.10.3",
-    "ros-topic": "jstnhuang/ros-topic#^0.1.0",
-    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0"
+    "ros-websocket": "jstnhuang/ros-websocket#^2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

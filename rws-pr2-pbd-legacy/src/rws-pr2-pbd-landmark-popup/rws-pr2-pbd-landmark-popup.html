@@ -1,0 +1,101 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/ros-websocket/ros-websocket.html">
+<link rel="import" href="../../bower_components/ros-topic/ros-topic.html">
+
+<!--
+`rws-pr2-pbd-landmark-popup`
+This element shows a popup for user to enter a name of a custom landmark.
+
+@demo demo/index.html 
+-->
+
+<dom-module id="rws-pr2-pbd-landmark-popup">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <ros-websocket auto ros="{{ros}}" on-connection=connect></ros-websocket>
+    <!-- Landmark request receiver -->
+    <ros-topic
+       auto
+       id="request"
+       on-message="requestHandler"
+       topic="/landmarkRequest"
+       ros="{{ros}}"
+       msg-type="std_msgs/String"
+    ></ros-topic>
+    <!-- Landmark name sender -->
+    <ros-topic
+       id="topic"
+       topic="/landmarkAnswer"
+       ros="{{ros}}"
+       msg-type="std_msgs/String">
+    </ros-topic>
+
+    <!-- Popup dialog -->
+    <paper-dialog id="dialog">
+      <p>Please enter the landmark name (except the word 'cancel'):</p>
+      <paper-input id="input" always-float-label label="Custom Landmark Name"></paper-input>
+      <paper-button raised on-click=cancel>Cancel</paper-button>
+      <paper-button raised on-click=submit>Submit</paper-button>
+    </paper-dialog>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'rws-pr2-pbd-landmark-popup',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'rws-pr2-pbd-landmark-popup',
+        },
+      },
+
+      connect: function() {
+        console.log("Connected");
+      },
+
+      requestHandler: function(event) {
+        this.dialogSwitch();
+      },
+
+      /**
+       * This function extracts user inputs and send it into robot backend as landmark name.
+       * Note: the user input is not supposed to be 'cancel'. If the input is cancel, it
+       * will be interpreted as naming cancellation.
+       */
+      submit: function() {
+        var text = this.$.input.value;
+        console.log(text);
+        this.$.topic.publish({data: text});
+        this.dialogSwitch();
+      },
+
+      /**
+       * This function send cancel signal to the robot backend.
+       */
+      cancel: function() {
+        var text = "cancel";
+        console.log(text);
+        this.$.topic.publish({data: text});
+        this.dialogSwitch();
+      },
+
+      /**
+       * This is a helper function to open/close the popup dialog.
+       */
+      dialogSwitch: function() {
+        var elt = document.getElementById("dialog");
+        elt.toggle();
+      },
+    });
+  </script>
+</dom-module>
