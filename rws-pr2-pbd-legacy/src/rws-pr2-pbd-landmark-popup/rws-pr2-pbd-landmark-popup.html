@@ -20,7 +20,8 @@ This element shows a popup for user to enter a name of a custom landmark.
       }
     </style>
 
-    <ros-websocket auto url="ws://mayarobot-wired:9090" ros="{{ros}}" on-connection=connect></ros-websocket>
+    <ros-websocket auto ros="{{ros}}" on-connection=connect></ros-websocket>
+    <!-- Landmark request receiver -->
     <ros-topic
        auto
        id="request"
@@ -37,6 +38,7 @@ This element shows a popup for user to enter a name of a custom landmark.
        msg-type="std_msgs/String">
     </ros-topic>
 
+    <!-- Popup dialog -->
     <paper-dialog id="dialog">
       <p>Please enter the landmark name (except the word 'cancel'):</p>
       <paper-input id="input" always-float-label label="Custom Landmark Name"></paper-input>
@@ -65,6 +67,11 @@ This element shows a popup for user to enter a name of a custom landmark.
         dialogSwitch();
       },
 
+      /**
+       * This function extracts user inputs and send it into robot backend as landmark name.
+       * Note: the user input is not supposed to be 'cancel'. If the input is cancel, it
+       * will be interpreted as naming cancellation.
+       */
       submit: function() {
         var text = this.$.input.value;
         console.log(text);
@@ -72,6 +79,9 @@ This element shows a popup for user to enter a name of a custom landmark.
         dialogSwitch();
       },
 
+      /**
+       * This function send cancel signal to the robot backend.
+       */
       cancel: function() {
         var text = "cancel";
         console.log(text);
