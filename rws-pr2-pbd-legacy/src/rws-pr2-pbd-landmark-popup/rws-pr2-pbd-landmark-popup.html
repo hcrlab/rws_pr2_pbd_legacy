@@ -64,7 +64,7 @@ This element shows a popup for user to enter a name of a custom landmark.
       },
 
       requestHandler: function(event) {
-        dialogSwitch();
+        this.dialogSwitch();
       },
 
       /**
@@ -76,7 +76,7 @@ This element shows a popup for user to enter a name of a custom landmark.
         var text = this.$.input.value;
         console.log(text);
         this.$.topic.publish({data: text});
-        dialogSwitch();
+        this.dialogSwitch();
       },
 
       /**
@@ -86,13 +86,16 @@ This element shows a popup for user to enter a name of a custom landmark.
         var text = "cancel";
         console.log(text);
         this.$.topic.publish({data: text});
-        dialogSwitch();
+        this.dialogSwitch();
+      },
+
+      /**
+       * This is a helper function to open/close the popup dialog.
+       */
+      dialogSwitch: function() {
+        var elt = document.getElementById("dialog");
+        elt.toggle();
       },
     });
-
-    function dialogSwitch() {
-      var elt = document.getElementById("dialog");
-      elt.toggle();
-    }
   </script>
 </dom-module>
