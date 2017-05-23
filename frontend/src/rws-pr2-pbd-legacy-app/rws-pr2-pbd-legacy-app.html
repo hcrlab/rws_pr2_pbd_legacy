@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/ros-websocket/ros-websocket.html">
 <link rel="import" href="../../bower_components/ros-rviz/ros-rviz.html">
+<link rel="import" href="../rws-pr2-pbd-landmark-popup/rws-pr2-pbd-landmark-popup.html">
 
 
 <dom-module id="rws-pr2-pbd-legacy-app">
@@ -14,6 +15,7 @@
     <ros-websocket auto id="websocket" url="{{url}}" ros="{{ros}}"></ros-websocket>
     <ros-rviz id="rviz" ros="{{ros}}" websocket-url="{{url}}" >
     </ros-rviz>
+    <rws-pr2-pbd-landmark-popup></rws-pr2-pbd-landmark-popup>
   </template>
 
   <script>
@@ -25,84 +27,85 @@
       },
 
       attached: function() {
-				var config = {
-				  "globalOptions": {
-				    "background": "#111111",
-				    "fixedFrame": "/base_link"
-				  },
-				  "displays": [
-				    {
-				      "isShown": true,
-				      "name": "Grid",
-				      "options": {
-				        "cellSize": 1,
-				        "color": "#cccccc",
-				        "numCells": 10
-				      },
-				      "type": "grid"
-				    },
-				    {
-				      "isShown": true,
-				      "name": "Robot model",
-				      "options": {
-				        "param": "robot_description",
-				        "tfPrefix": ""
-				      },
-				      "type": "urdf"
-				    },
-				    {
-				      "isShown": true,
-				      "name": "World objects",
-				      "options": {
-				        "topic": "/world_objects"
-				      },
-				      "type": "interactiveMarkers"
-				    },
-				    {
-				      "isShown": true,
-				      "name": "Programmed actions",
-				      "options": {
-				        "topic": "/programmed_actions"
-				      },
-				      "type": "interactiveMarkers"
-				    },
-				    {
-				      "isShown": false,
-				      "name": "Arm control",
-				      "options": {
-				        "topic": "/interactive_arm_control"
-				      },
-				      "type": "interactiveMarkers"
-				    },
-				    {
-				      "isShown": true,
-				      "name": "CL ROI",
-				      "options": {
-				        "topic": "/roi"
-				      },
-				      "type": "interactiveMarkers"
-				    },
-				    {
-				      "isShown": true,
-				      "name": "CL scene",
-				      "options": {
-				        "topic": "/scene",
-				        "size": 0.01
-				      },
-				      "type": "pointCloud2"
-				    },
-				    {
-				      "isShown": true,
-				      "name": "CL output",
-				      "options": {
-				        "topic": "/output",
-				        "size": 0.01
-				      },
-				      "type": "pointCloud2"
-				    }
-				  ],
-				  "sidebarOpened": true
-				};
+        var config = {
+          "globalOptions": {
+            "background": "#111111",
+            "colladaLoader": "collada2",
+            "fixedFrame": "/base_link"
+          },
+          "displays": [
+            {
+              "isShown": true,
+              "name": "Grid",
+              "options": {
+                "cellSize": 1,
+                "color": "#cccccc",
+                "numCells": 10
+              },
+              "type": "grid"
+            },
+            {
+              "isShown": true,
+              "name": "Robot model",
+              "options": {
+                "param": "robot_description",
+                "tfPrefix": ""
+              },
+              "type": "urdf"
+            },
+            {
+              "isShown": true,
+              "name": "World objects",
+              "options": {
+                "topic": "/world_objects"
+              },
+              "type": "interactiveMarkers"
+            },
+            {
+              "isShown": true,
+              "name": "Programmed actions",
+              "options": {
+                "topic": "/programmed_actions"
+              },
+              "type": "interactiveMarkers"
+            },
+            {
+              "isShown": false,
+              "name": "Arm control",
+              "options": {
+                "topic": "/interactive_arm_control"
+              },
+              "type": "interactiveMarkers"
+            },
+            {
+              "isShown": true,
+              "name": "CL ROI",
+              "options": {
+                "topic": "/roi"
+              },
+              "type": "interactiveMarkers"
+            },
+            {
+              "isShown": true,
+              "name": "CL scene",
+              "options": {
+                "topic": "/scene",
+                "size": 0.01
+              },
+              "type": "pointCloud2"
+            },
+            {
+              "isShown": true,
+              "name": "CL output",
+              "options": {
+                "topic": "/output",
+                "size": 0.01
+              },
+              "type": "pointCloud2"
+            }
+          ],
+          "sidebarOpened": true
+        };
         this.$.rviz.loadConfig(config);
       },
     });
