@@ -64,6 +64,7 @@ This element shows a popup for user to enter a name of a custom landmark.
       },
 
       requestHandler: function(event) {
+        console.log("Request received");
         this.dialogSwitch();
       },
 
@@ -93,7 +94,7 @@ This element shows a popup for user to enter a name of a custom landmark.
        * This is a helper function to open/close the popup dialog.
        */
       dialogSwitch: function() {
-        var elt = document.getElementById("dialog");
+        var elt = this.$.dialog;
         elt.toggle();
       },
     });
