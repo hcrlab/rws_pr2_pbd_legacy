@@ -25,10 +25,86 @@
       },
 
       attached: function() {
-       var val2 = {"globalOptions":{"background":"#000000","clientId":"0.6384918484579185","colladaLoader":"collada","colladaServer":"http://mayarobot-wired.cs.washington.edu:8001/","fixedFrame":"/base_link","url":"ws://mayarobot-wired.cs.washington.edu:9090","videoServer":"http://mayarobot-wired.cs.washington.edu:9999"},"displays":[{"isShown":true,"name":"Grid","options":{"cellSize":1,"color":"#ff0066","numCells":10},"type":"grid"},{"isShown":true,"name":"Robot model","options":{"param":"robot_description","tfPrefix":""},"type":"urdf"}],"sidebarOpened":false}
-        this.$.rviz.loadConfig(val2);
+				var config = {
+				  "globalOptions": {
+				    "background": "#111111",
+				    "fixedFrame": "/base_link"
+				  },
+				  "displays": [
+				    {
+				      "isShown": true,
+				      "name": "Grid",
+				      "options": {
+				        "cellSize": 1,
+				        "color": "#cccccc",
+				        "numCells": 10
+				      },
+				      "type": "grid"
+				    },
+				    {
+				      "isShown": true,
+				      "name": "Robot model",
+				      "options": {
+				        "param": "robot_description",
+				        "tfPrefix": ""
+				      },
+				      "type": "urdf"
+				    },
+				    {
+				      "isShown": true,
+				      "name": "World objects",
+				      "options": {
+				        "topic": "/world_objects"
+				      },
+				      "type": "interactiveMarkers"
+				    },
+				    {
+				      "isShown": true,
+				      "name": "Programmed actions",
+				      "options": {
+				        "topic": "/programmed_actions"
+				      },
+				      "type": "interactiveMarkers"
+				    },
+				    {
+				      "isShown": false,
+				      "name": "Arm control",
+				      "options": {
+				        "topic": "/interactive_arm_control"
+				      },
+				      "type": "interactiveMarkers"
+				    },
+				    {
+				      "isShown": true,
+				      "name": "CL ROI",
+				      "options": {
+				        "topic": "/roi"
+				      },
+				      "type": "interactiveMarkers"
+				    },
+				    {
+				      "isShown": true,
+				      "name": "CL scene",
+				      "options": {
+				        "topic": "/scene",
+				        "size": 0.01
+				      },
+				      "type": "pointCloud2"
+				    },
+				    {
+				      "isShown": true,
+				      "name": "CL output",
+				      "options": {
+				        "topic": "/output",
+				        "size": 0.01
+				      },
+				      "type": "pointCloud2"
+				    }
+				  ],
+				  "sidebarOpened": true
+				};
+        this.$.rviz.loadConfig(config);
       },
-
     });
   </script>
 </dom-module>
