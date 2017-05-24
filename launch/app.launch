@@ -1,2 +1,18 @@
 <launch>
+  <node pkg="interactive_marker_proxy" type="proxy" name="rws_pr2_pbd_world_proxy">
+    <remap from="topic_ns" to="world_objects" />
+    <remap from="target_frame" to="base_link" />
+  </node>
+  <node pkg="interactive_marker_proxy" type="proxy" name="rws_pr2_pbd_programmed_actions_proxy">
+    <remap from="topic_ns" to="programmed_actions" />
+    <remap from="target_frame" to="base_link" />
+  </node>
+  <node pkg="interactive_marker_proxy" type="proxy" name="rws_pr2_pbd_programmed_roi_proxy">
+    <remap from="topic_ns" to="roi" />
+    <remap from="target_frame" to="base_link" />
+  </node>
+  <node pkg="interactive_marker_proxy" type="proxy" name="rws_pr2_pbd_programmed_arm_control_proxy">
+    <remap from="topic_ns" to="interactive_arm_control" />
+    <remap from="target_frame" to="base_link" />
+  </node>
 </launch>
