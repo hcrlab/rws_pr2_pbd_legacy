@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/ros-websocket/ros-websocket.html">
 <link rel="import" href="../../bower_components/ros-topic/ros-topic.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 
 <!--
 `rws-pr2-pbd-landmark-popup`
@@ -23,12 +24,25 @@ This element shows a popup for user to enter a name of a custom landmark.
        * The dialog is fixed to top right corner
        */
       #dialog {
-        height: 200px;
-        margin: 0px 0px 0px 0px;
+        height: 60px;
         position: fixed;
         right: 0px;
         top: 0px;
         width: 300px;
+      }
+
+      /*
+       * Remove margins for both dialog and button
+       */
+      #dialog, #dialog > paper-button {
+        margin: 0px 0px 0px 0px;
+      }
+
+      /*
+       * Consistent background
+       */
+      #dropdown {
+        background-color: white;
       }
     </style>
 
@@ -52,10 +66,14 @@ This element shows a popup for user to enter a name of a custom landmark.
 
     <!-- Popup dialog -->
     <paper-dialog id="dialog">
-      <p>Please enter the landmark name (except the word 'cancel'):</p>
-      <paper-input id="input" always-float-label label="Custom Landmark Name"></paper-input>
-      <paper-button raised on-click=cancel>Cancel</paper-button>
-      <paper-button raised on-click=submit>Submit</paper-button>
+      <paper-button raised on-tap="dropdownButton">Please enter the landmark name (except the word 'cancel'):</paper-button>
+      <iron-collapse id="dropdown">
+	<div id="dropdownContent">
+	  <paper-input id="input" always-float-label label="Custom Landmark Name"></paper-input>
+	  <paper-button raised on-click=cancel>Cancel</paper-button>
+	  <paper-button raised on-click=submit>Submit</paper-button>
+	</div>
+      </iron-collapse>
     </paper-dialog>
   </template>
 
@@ -109,6 +127,13 @@ This element shows a popup for user to enter a name of a custom landmark.
       dialogSwitch: function() {
         var elt = this.$.dialog;
         elt.toggle();
+      },
+
+      /**
+       * This function reacts to button click for dropdown in the popup.
+       */
+      dropdownButton: function() {
+        this.$.dropdown.toggle();
       },
     });
   </script>
