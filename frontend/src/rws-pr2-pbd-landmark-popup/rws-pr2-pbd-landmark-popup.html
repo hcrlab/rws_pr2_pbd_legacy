@@ -18,6 +18,18 @@ This element shows a popup for user to enter a name of a custom landmark.
       :host {
         display: block;
       }
+
+      /*
+       * The dialog is fixed to top right corner
+       */
+      #dialog {
+        height: 200px;
+        margin: 0px 0px 0px 0px;
+        position: fixed;
+        right: 0px;
+        top: 0px;
+        width: 300px;
+      }
     </style>
 
     <ros-websocket auto ros="{{ros}}" on-connection=connect></ros-websocket>
@@ -61,6 +73,7 @@ This element shows a popup for user to enter a name of a custom landmark.
 
       connect: function() {
         console.log("Connected");
+        this.dialogSwitch();
       },
 
       requestHandler: function(event) {
