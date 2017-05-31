@@ -24,25 +24,40 @@ This element shows a popup for user to enter a name of a custom landmark.
        * The dialog is fixed to top right corner
        */
       #dialog {
-        height: 60px;
         position: fixed;
         right: 0px;
         top: 0px;
-        width: 300px;
       }
 
       /*
        * Remove margins for both dialog and button
        */
-      #dialog, #dialog > paper-button {
+      #dialog, #dialog > paper-button, #dropdown {
         margin: 0px 0px 0px 0px;
+      }
+
+      /*
+       * Force dialog and dropdown button to be the same size
+       */
+      #dialog, #dialog > paper-button {
+        height: 60px;
+        width: 300px;
+      }
+
+      /*
+       * Special style for dropdown button
+       */
+      #dialog > paper-button {
+        color: white;
+        background-color: darkslateblue;
       }
 
       /*
        * Consistent background
        */
       #dropdown {
-        background-color: white;
+        background-color: white; 
+        padding: 10px 10px 10px 10px;
       }
     </style>
 
@@ -91,6 +106,7 @@ This element shows a popup for user to enter a name of a custom landmark.
 
       connect: function() {
         console.log("Connected");
+        this.$.dialog.noCancelOnOutsideClick = true;
         this.dialogSwitch();
       },
 
@@ -122,11 +138,16 @@ This element shows a popup for user to enter a name of a custom landmark.
       },
 
       /**
-       * This is a helper function to open/close the popup dialog.
+       * This is a helper function to open/close the popup dialog,
+       * and force the dropdown to open
        */
       dialogSwitch: function() {
-        var elt = this.$.dialog;
-        elt.toggle();
+        var dialog = this.$.dialog;
+        var dropdown = this.$.dropdown;
+        dialog.toggle();
+        if (!dropdown.opened) {
+          dropdown.toggle();
+        }
       },
 
       /**
