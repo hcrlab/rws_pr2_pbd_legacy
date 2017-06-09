@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/ros-websocket/ros-websocket.html">
 <link rel="import" href="../../bower_components/ros-topic/ros-topic.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 
 <!--
 `rws-pr2-pbd-landmark-popup`
@@ -17,6 +18,47 @@ This element shows a popup for user to enter a name of a custom landmark.
     <style>
       :host {
         display: block;
+      }
+
+      /*
+       * The dialog is fixed to top right corner
+       */
+      #dialog {
+        position: fixed;
+        right: 0px;
+        top: 0px;
+      }
+
+      /*
+       * Remove margins for both dialog and button
+       */
+      #dialog, #dialog > paper-button, #dropdown {
+        margin: 0px 0px 0px 0px;
+      }
+
+      /*
+       * Force dialog and dropdown button to be the same size
+       */
+      #dialog, #dialog > paper-button {
+        height: 60px;
+        width: 300px;
+      }
+
+      /*
+       * Special style for dropdown button
+       */
+      #dialog > paper-button {
+        color: white;
+        background-color: darkslateblue;
+        border-radius: 0px;
+      }
+
+      /*
+       * Consistent background
+       */
+      #dropdown {
+        background-color: white; 
+        padding: 10px 10px 10px 10px;
       }
     </style>
 
@@ -40,10 +82,14 @@ This element shows a popup for user to enter a name of a custom landmark.
 
     <!-- Popup dialog -->
     <paper-dialog id="dialog">
-      <p>Please enter the landmark name (except the word 'cancel'):</p>
-      <paper-input id="input" always-float-label label="Custom Landmark Name"></paper-input>
-      <paper-button raised on-click=cancel>Cancel</paper-button>
-      <paper-button raised on-click=submit>Submit</paper-button>
+      <paper-button raised on-tap="dropdownButton">Please enter the landmark name (except the word 'cancel'):</paper-button>
+      <iron-collapse id="dropdown">
+	<div id="dropdownContent">
+	  <paper-input id="input" always-float-label label="Custom Landmark Name"></paper-input>
+	  <paper-button raised on-click=cancel>Cancel</paper-button>
+	  <paper-button raised on-click=submit>Submit</paper-button>
+	</div>
+      </iron-collapse>
     </paper-dialog>
   </template>
 
@@ -61,6 +107,7 @@ This element shows a popup for user to enter a name of a custom landmark.
 
       connect: function() {
         console.log("Connected");
+        this.$.dialog.noCancelOnOutsideClick = true;
       },
 
       requestHandler: function(event) {
@@ -91,11 +138,23 @@ This element shows a popup for user to enter a name of a custom landmark.
       },
 
       /**
-       * This is a helper function to open/close the popup dialog.
+       * This is a helper function to open/close the popup dialog,
+       * and force the dropdown to open
        */
       dialogSwitch: function() {
-        var elt = this.$.dialog;
-        elt.toggle();
+        var dialog = this.$.dialog;
+        var dropdown = this.$.dropdown;
+        dialog.toggle();
+        if (!dropdown.opened) {
+          dropdown.toggle();
+        }
+      },
+
+      /**
+       * This function reacts to button click for dropdown in the popup.
+       */
+      dropdownButton: function() {
+        this.$.dropdown.toggle();
       },
     });
   </script>
